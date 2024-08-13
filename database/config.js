@@ -1,8 +1,10 @@
 const { Sequelize} = require('sequelize');
 
-const sequelizeDB = new Sequelize('fueldb', 'root', '', {
-    host:'localhost',
-    dialect: 'mariadb',
+
+console.log(process.env.BDD, process.env.PASSWORDBDD, process.env.HOSTBDD, process.env.DIAL, process.env.BDDUSUARIO, process.env.SECRET_JWT_SEED);
+const sequelizeDB = new Sequelize(process.env.BDD, 'root', process.env.PASSWORDBDD, {
+    host:process.env.HOSTBDD,
+    dialect: process.env.DIAL,
     pool: {
       max: 10, // Número máximo de conexiones en el pool
       min: 0,  // Número mínimo de conexiones en el pool
