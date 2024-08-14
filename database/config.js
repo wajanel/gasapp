@@ -2,7 +2,7 @@ const { Sequelize} = require('sequelize');
 
 
 console.log(process.env.BDD, process.env.PASSWORDBDD, process.env.HOSTBDD, process.env.DIAL, process.env.BDDUSUARIO, process.env.SECRET_JWT_SEED);
-const sequelizeDB = new Sequelize(process.env.BDD, 'root', process.env.PASSWORDBDD, {
+const sequelizeDB = new Sequelize(process.env.BDD, process.env.BDDUSUARIO, process.env.PASSWORDBDD, {
     host:process.env.HOSTBDD,
     dialect: process.env.DIAL,
     pool: {
@@ -12,10 +12,10 @@ const sequelizeDB = new Sequelize(process.env.BDD, 'root', process.env.PASSWORDB
       idle: 100000 // Tiempo máximo en ms que una conexión puede estar inactiva antes de ser liberada
     },
     dialectOptions: {
-      connectTimeout: 60000 // Tiempo de espera en ms para la conexión inicial
+      connectTimeout: 60000, // Tiempo de espera en ms para la conexión inicial
+      allowPublicKeyRetrieval: true,
     },
 })
-
 
 const dbConnection = async()=>{
     try {
@@ -25,7 +25,6 @@ const dbConnection = async()=>{
         console.error('Unable to connect to the database:', error);
       }
 }
-
 
 module.exports = {
     dbConnection,
