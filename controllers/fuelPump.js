@@ -4,8 +4,11 @@ const { FuelPump } = require('../database/entity/FuelPump');
 const crearFuelPump = async (req, res = response) => {
     const { id_fuel_type, id_pump, side } = req.body;
 
-    console.log('crearFuelPump');
     console.log({id_fuel_type, id_pump, side});
+
+    if( req.role !== 'admin')
+        return res.status(403).json({ok:false, msg:'No tiene permisos para realizar la acción'});
+
     try {
         const response = await FuelPump.create({ id_fuel_type, id_pump, side });
         console.log(response);
@@ -43,6 +46,8 @@ const updateFuelPump = async (req, res = response) => {
     const { id_fuel_type, id_pump } = req.params;
     const { side } = req.body;
 
+    if( req.role !== 'admin')
+        return res.status(403).json({ok:false, msg:'No tiene permisos para realizar la acción'});
 
     console.log({id_fuel_type, id_pump, side});
 
@@ -71,6 +76,9 @@ const updateFuelPump = async (req, res = response) => {
 const deleteFuelPump = async (req, res) => {
     const { id_fuel_type, id_pump } = req.params;
 
+    if( req.role !== 'admin')
+        return res.status(403).json({ok:false, msg:'No tiene permisos para realizar la acción'});
+    
     try {
         const result = await FuelPump.destroy({ where: { id_fuel_type, id_pump } });
 

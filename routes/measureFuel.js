@@ -1,7 +1,9 @@
 const { Router } = require('express');
 const { crearMeasureFuel, listadoMeasureFuel, updateMeasureFuel, deleteMeasureFuel } = require('../controllers/measureFuel');
+const { validarJWT } = require('../middleware/jwt-validator');
 const router = Router();
 
+router.use(validarJWT);
 /*
     ruta: host + /measure-fuel 
 */

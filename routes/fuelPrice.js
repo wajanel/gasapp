@@ -1,7 +1,9 @@
 const { Router } = require('express');
 const { crearFuelPrice, listadoFuelPrice, updateFuelPrice, deleteFuelPrice, getLatestFuelPrices } = require('../controllers/fuelPrice');
+const { validarJWT } = require('../middleware/jwt-validator');
 const router = Router();
 
+router.use(validarJWT);
 /*
     ruta: host + /fuel-price 
 */

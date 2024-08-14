@@ -4,6 +4,9 @@ const { MeasureFuel } = require('../database/entity/MeasureFuel');
 const crearMeasureFuel = async (req, res = response) => {
     const { name, description } = req.body;
 
+    if( req.role !== 'admin')
+        return res.status(403).json({ok:false, msg:'No tiene permisos para realizar la acción'});
+
     try {
         const response = await MeasureFuel.create({ name, description });
         console.log(response);
@@ -41,6 +44,9 @@ const updateMeasureFuel = async (req, res = response) => {
     const id = req.params.id;
     const { name, description } = req.body;
 
+    if( req.role !== 'admin')
+        return res.status(403).json({ok:false, msg:'No tiene permisos para realizar la acción'});
+
     try {
         const result = await MeasureFuel.update(
             { name, description },
@@ -66,6 +72,9 @@ const updateMeasureFuel = async (req, res = response) => {
 const deleteMeasureFuel = async (req, res) => {
     const id = req.params.id;
 
+    if( req.role !== 'admin')
+        return res.status(403).json({ok:false, msg:'No tiene permisos para realizar la acción'});
+    
     try {
         const result = await MeasureFuel.destroy({ where: { id } });
 

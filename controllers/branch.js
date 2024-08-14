@@ -3,7 +3,11 @@ const { Branch } = require('../database/entity/Branch');
 
 
 const crearBranch = async (req, res = response)=>{
-    const { name, address, id_status, id_user, description, phone} = req.body;
+    const { name, address, id_status, description, phone} = req.body;
+    
+    const id_user = req.uid;
+    if( req.role !== 'admin')
+        return res.status(403).json({ok:false, msg:'No tiene permisos para realizar la acción'});
 
     try {
         const response = await Branch.create({name, address, id_status, id_user, description, phone})
@@ -42,7 +46,12 @@ const listadoBranch = async (req, res)=>{
 
 const updateBranch = async (req, res = response) =>{
     const id = req.params.id;
-    const { name, address, id_status, id_user, description, phone} = req.body;
+    const { name, address, id_status, description, phone} = req.body;
+    
+    const id_user = req.uid;
+    if( req.role !== 'admin')
+        return res.status(403).json({ok:false, msg:'No tiene permisos para realizar la acción'});
+
     try {
         const result = await Branch.update(
             {name, address, id_status, id_user, description, phone},{
@@ -71,6 +80,10 @@ const updateBranch = async (req, res = response) =>{
 const deleteBranch = async ( req, res) => {
 
     const id = req.params.id;
+
+    if( req.role !== 'admin')
+        return res.status(403).json({ok:false, msg:'No tiene permisos para realizar la acción'});
+
     try {
         const result = await Branch.destroy({
             where:{

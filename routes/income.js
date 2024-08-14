@@ -1,7 +1,9 @@
 const { Router } = require('express');
 const { crearIncome, listadoIncome, updateIncome, deleteIncome } = require('../controllers/income');
+const { validarJWT } = require('../middleware/jwt-validator');
 const router = Router();
 
+router.use(validarJWT);
 /*
     ruta: host + /income 
 */

@@ -4,6 +4,9 @@ const { IncomeType } = require('../database/entity/IncomeType');
 const crearIncomeType = async (req, res = response) => {
     const { name, description } = req.body;
 
+    if( req.role !== 'admin' && req.role !== 'usuario')
+        return res.status(403).json({ok:false, msg:'No tiene permisos para realizar la acción'});
+
     try {
         const response = await IncomeType.create({ name, description });
         console.log(response);
@@ -41,6 +44,10 @@ const updateIncomeType = async (req, res = response) => {
     const id = req.params.id;
     const { name, description } = req.body;
 
+    if( req.role !== 'admin' && req.role !== 'usuario')
+        return res.status(403).json({ok:false, msg:'No tiene permisos para realizar la acción'});
+
+
     try {
         const result = await IncomeType.update(
             { name, description },
@@ -65,6 +72,9 @@ const updateIncomeType = async (req, res = response) => {
 
 const deleteIncomeType = async (req, res) => {
     const id = req.params.id;
+
+    if( req.role !== 'admin' && req.role !== 'usuario')
+        return res.status(403).json({ok:false, msg:'No tiene permisos para realizar la acción'});
 
     try {
         const result = await IncomeType.destroy({ where: { id } });

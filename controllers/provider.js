@@ -4,6 +4,9 @@ const { Provider } = require('../database/entity/Provider')
 const crearProvider = async (req, res = response) => {
     const { name, address, phone_number, description } = req.body;
 
+    if( req.role !== 'admin' && req.role !== 'usuario')
+        return res.status(403).json({ok:false, msg:'No tiene permisos para realizar la acción'});
+
     try {
         const response = await Provider.create({ name, address, phone_number, description });
         console.log(response);
@@ -43,6 +46,9 @@ const updateProvider = async (req, res = response) => {
     const id = req.params.id;
     const { name, address, phone_number, description } = req.body;
 
+    if( req.role !== 'admin' && req.role !== 'usuario')
+        return res.status(403).json({ok:false, msg:'No tiene permisos para realizar la acción'});
+
     try {
         const result = await Provider.update(
             { name, address, phone_number, description },
@@ -68,6 +74,9 @@ const updateProvider = async (req, res = response) => {
 const deleteProvider = async (req, res) => {
     const id = req.params.id;
 
+    if( req.role !== 'admin' && req.role !== 'usuario')
+        return res.status(403).json({ok:false, msg:'No tiene permisos para realizar la acción'});
+    
     try {
         const result = await Provider.destroy({ where: { id } });
 

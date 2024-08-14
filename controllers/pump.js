@@ -7,6 +7,9 @@ const crearPump = async(req, res = response) => {
     try {
         const {name, code, status:id_status, description, branch:id_branch} = req.body;
         const result = await Pump.create({name, code, id_status, description, id_branch});
+
+        if( req.role !== 'admin')
+            return res.status(403).json({ok:false, msg:'No tiene permisos para realizar la acción'});
         
         return res.json({
             ok:true,
@@ -29,6 +32,10 @@ const updatePump = async ( req, res = response) => {
 
     try {
         const id = req.params.id
+        
+        if( req.role !== 'admin')
+            return res.status(403).json({ok:false, msg:'No tiene permisos para realizar la acción'});
+
         const {name, code, status:id_status, description, branch:id_branch} = req.body;
         const result = await Pump.update({name, code, id_status, description, id_branch}, 
             {
@@ -98,6 +105,9 @@ const pumpsByBranch = async ( req, res = response) =>{
 
 const deletePump = async (req, res) => {
     const id = req.params.id;
+
+    if( req.role !== 'admin')
+        return res.status(403).json({ok:false, msg:'No tiene permisos para realizar la acción'});
 
     try {
         const result = await Pump.destroy({ where: { id } });

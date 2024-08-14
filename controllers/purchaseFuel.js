@@ -2,9 +2,14 @@ const { response } = require('express');
 const { PurchaseFuel } = require('../database/entity/PurchaseFuel');
 
 const crearPurchaseFuel = async (req, res = response) => {
-    const { id_branch, id_provider, id_fuel_type, id_user, unit_price, quantity, id_measure, time } = req.body;
+    const { id_branch, id_provider, id_fuel_type, unit_price, quantity, id_measure, time } = req.body;
 
     try {
+
+        const id_user = req.uid;
+        if( req.role !== 'admin' && req.role !== 'usuario')
+            return res.status(403).json({ok:false, msg:'No tiene permisos para realizar la acción'});
+
         const response = await PurchaseFuel.create({ id_branch, id_provider, id_fuel_type, id_user, unit_price, quantity, id_measure, time });
         console.log(response);
         return res.json({
@@ -39,8 +44,12 @@ const listadoPurchaseFuel = async (req, res) => {
 
 const updatePurchaseFuel = async (req, res = response) => {
     const id = req.params.id;
-    const { id_branch, id_provider, id_fuel_type, id_user, unit_price, quantity, id_measure, time } = req.body;
+    const { id_branch, id_provider, id_fuel_type, unit_price, quantity, id_measure, time } = req.body;
 
+    const id_user = req.uid;
+        if( req.role !== 'admin' && req.role !== 'usuario')
+            return res.status(403).json({ok:false, msg:'No tiene permisos para realizar la acción'});
+    
     try {
         const result = await PurchaseFuel.update(
             { id_branch, id_provider, id_fuel_type, id_user, unit_price, quantity, id_measure, time },
@@ -65,6 +74,9 @@ const updatePurchaseFuel = async (req, res = response) => {
 
 const deletePurchaseFuel = async (req, res) => {
     const id = req.params.id;
+
+    if( req.role !== 'admin' && req.role !== 'usuario')
+        return res.status(403).json({ok:false, msg:'No tiene permisos para realizar la acción'});
 
     try {
         const result = await PurchaseFuel.destroy({ where: { id } });

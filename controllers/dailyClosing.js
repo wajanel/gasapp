@@ -4,6 +4,10 @@ const DailyClosing = require('../database/entity/DailyClosing');
 
 const doDailyClosing = async (req, res = response) => {
     try {
+
+        if( req.role !== 'admin')
+            return res.status(403).json({ok:false, msg:'No tiene permisos para realizar la acción'});
+
         const { date } = req.body;
 
         // Definir los parámetros de salida como variables de Sequelize

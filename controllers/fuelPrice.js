@@ -1,10 +1,12 @@
 const { response } = require('express');
 const { FuelPrice } = require('../database/entity/FuelPrice');
 const { sequelizeDB } = require('../database/config');
-const { QueryInterface, json } = require('sequelize');
 
 const crearFuelPrice = async (req, res = response) => {
     const { date, price, id_pump, id_fuel_type } = req.body;
+
+    if( req.role !== 'admin')
+        return res.status(403).json({ok:false, msg:'No tiene permisos para realizar la acción'});
 
     try {
         const response = await FuelPrice.create({ date, price, id_pump, id_fuel_type });
@@ -42,7 +44,10 @@ const listadoFuelPrice = async (req, res) => {
 const updateFuelPrice = async (req, res = response) => {
     const id = req.params.id;
     const { date, price, id_pump, id_fuel_type } = req.body;
-
+    
+    if( req.role !== 'admin')
+        return res.status(403).json({ok:false, msg:'No tiene permisos para realizar la acción'});
+    
     try {
         const result = await FuelPrice.update(
             { date, price, id_pump, id_fuel_type },
@@ -68,6 +73,9 @@ const updateFuelPrice = async (req, res = response) => {
 const deleteFuelPrice = async (req, res) => {
     const id = req.params.id;
 
+    if( req.role !== 'admin')
+        return res.status(403).json({ok:false, msg:'No tiene permisos para realizar la acción'});
+    
     try {
         const result = await FuelPrice.destroy({ where: { id } });
 

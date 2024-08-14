@@ -1,6 +1,9 @@
 const { Router } = require('express');
 const { crearExpensesType, listadoExpensesType, updateExpensesType, deleteExpensesType } = require('../controllers/expensesType');
+const { validarJWT } = require('../middleware/jwt-validator');
 const router = Router();
+
+router.use(validarJWT);
 
 /*
     ruta: host + /expenses-type 

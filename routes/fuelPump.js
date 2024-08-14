@@ -1,7 +1,9 @@
 const { Router } = require('express');
 const { crearFuelPump, listadoFuelPump, updateFuelPump, deleteFuelPump } = require('../controllers/fuelPump');
+const { validarJWT } = require('../middleware/jwt-validator');
 const router = Router();
 
+router.use(validarJWT);
 /*
     ruta: host + /fuel-pump 
 */
