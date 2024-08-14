@@ -1,5 +1,6 @@
 const { response } = require('express');
 const { sequelizeDB } = require('../database/config');
+const DailyClosing = require('../database/entity/DailyClosing');
 
 const doDailyClosing = async (req, res = response) => {
     try {
@@ -41,6 +42,22 @@ const doDailyClosing = async (req, res = response) => {
     }
 };
 
+const getAllDailyClosing = async ( req, res = response) =>{
+    try {
+        const result = await DailyClosing.findAll();
+        res.json({
+            ok:true,
+            result
+        })
+    } catch (error) {
+        res.status(500).json({
+            ok:false,
+            msg:error
+        })
+    }
+};
+
 module.exports = {
     doDailyClosing,
+    getAllDailyClosing
 };

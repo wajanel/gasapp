@@ -1,5 +1,5 @@
 const {Router} = require('express');
-const { doDailyClosing } = require('../controllers/dailyClosing');
+const { doDailyClosing, getAllDailyClosing } = require('../controllers/dailyClosing');
 const router = Router();
 
 
@@ -7,6 +7,7 @@ const router = Router();
     ruta: host + /branch 
 */
 
+router.get('/', getAllDailyClosing);
 router.post('/daily', doDailyClosing);
 
 module.exports = router;
