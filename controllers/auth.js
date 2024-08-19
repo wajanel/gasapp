@@ -64,6 +64,7 @@ const loginUsuario = async (req, res = response) =>{
                 })
             }
 
+            console.log({userName, password});
             const validacionPass = bcryptjs.compareSync(password, usuario.dataValues.password);
 
             if(!validacionPass) {

@@ -5,16 +5,19 @@ const { where } = require('sequelize');
 
 const crearPump = async(req, res = response) => {
     try {
-        const {name, code, status:id_status, description, branch:id_branch} = req.body;
-        const result = await Pump.create({name, code, id_status, description, id_branch});
-
+        
         if( req.role !== 'admin')
             return res.status(403).json({ok:false, msg:'No tiene permisos para realizar la acción'});
         
+        const {name, code, id_status, description, id_branch} = req.body;
+        console.log({name, code, id_status, description, id_branch})
+        const result = await Pump.create({name, code, id_status, description, id_branch});
+
         return res.json({
             ok:true,
-            msg:'crearPump',
-            id:response.id
+            msg:'Bomba creada',
+            result,
+            id:result.id
         })
 
     } catch (error) {
@@ -36,7 +39,7 @@ const updatePump = async ( req, res = response) => {
         if( req.role !== 'admin')
             return res.status(403).json({ok:false, msg:'No tiene permisos para realizar la acción'});
 
-        const {name, code, status:id_status, description, branch:id_branch} = req.body;
+        const {name, code, id_status, description, id_branch} = req.body;
         const result = await Pump.update({name, code, id_status, description, id_branch}, 
             {
                 where:{id}

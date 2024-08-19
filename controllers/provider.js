@@ -17,9 +17,11 @@ const crearProvider = async (req, res = response) => {
             id:response.id
         });
     } catch (error) {
+        console.log(error.message);
+        
         return res.status(500).json({
             ok: false,
-            msg: error.message
+            msg: 'Error al guardar el proveedor'
         });
     }
 };
@@ -37,7 +39,7 @@ const listadoProvider = async (req, res) => {
         console.log(error)
         return res.status(500).json({
             ok: false,
-            msg: error.message
+            msg: 'Error al listar los proveedores'
         });
     }
 };
@@ -64,9 +66,11 @@ const updateProvider = async (req, res = response) => {
             msg: 'Proveedor actualizado exitosamente.'
         });
     } catch (error) {
+        console.log(error.message);
+        
         return res.status(500).json({
             ok: false,
-            msg: error.message
+            msg: 'Error al actualizar el proveedor'
         });
     }
 };
@@ -89,9 +93,11 @@ const deleteProvider = async (req, res) => {
             msg: 'Proveedor eliminado exitosamente.'
         });
     } catch (error) {
+        console.log(error.message);
+        
         return res.status(500).json({
             ok: false,
-            msg: error.message
+            msg: 'Error al eliminar el proveedor'
         });
     }
 };

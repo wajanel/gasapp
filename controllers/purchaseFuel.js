@@ -19,9 +19,10 @@ const crearPurchaseFuel = async (req, res = response) => {
             id:response.id
         });
     } catch (error) {
+        console.log(error.message);
         return res.status(500).json({
             ok: false,
-            msg: error.message
+            msg: 'Error al crear la compra de combustible'
         });
     }
 };
@@ -35,9 +36,11 @@ const listadoPurchaseFuel = async (req, res) => {
             listado
         });
     } catch (error) {
+        console.log(error.message);
+        
         return res.status(500).json({
             ok: false,
-            msg: error.message
+            msg: 'error al listar las compras de combustible'
         });
     }
 };
@@ -65,9 +68,11 @@ const updatePurchaseFuel = async (req, res = response) => {
             msg: 'Compra de combustible actualizada exitosamente.'
         });
     } catch (error) {
+        console.log(error.message);
+        
         return res.status(500).json({
             ok: false,
-            msg: error.message
+            msg: 'Error al actualizar la compra de combustible'
         });
     }
 };
@@ -90,9 +95,12 @@ const deletePurchaseFuel = async (req, res) => {
             msg: 'Compra de combustible eliminada exitosamente.'
         });
     } catch (error) {
+
+        console.log(error.message);
+        
         return res.status(500).json({
             ok: false,
-            msg: error.message
+            msg: 'Error al eliminar la compra de combustible'
         });
     }
 };

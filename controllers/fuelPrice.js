@@ -8,8 +8,10 @@ const crearFuelPrice = async (req, res = response) => {
     if( req.role !== 'admin')
         return res.status(403).json({ok:false, msg:'No tiene permisos para realizar la acción'});
 
+    console.log({ date, price, id_pump, id_fuel_type })
     try {
         const response = await FuelPrice.create({ date, price, id_pump, id_fuel_type });
+        console.log('lugo de fuel price');
         console.log(response);
         return res.json({
             ok: true,
@@ -18,6 +20,7 @@ const crearFuelPrice = async (req, res = response) => {
             id:response.id
         });
     } catch (error) {
+        console.log(error);
         return res.status(500).json({
             ok: false,
             msg: error.message
@@ -102,10 +105,10 @@ const getLatestFuelPrices = async (req, res = response) => {
         SELECT fp1.id, fp1.date, fp1.price, fp1.id_pump, fp1.id_fuel_type
         FROM fuel_price fp1
         INNER JOIN (
-            SELECT id_fuel_type, MAX(date) AS max_date
+            SELECT id_fuel_type, id_pump, MAX(date) AS max_date
             FROM fuel_price
             Where id_fuel_type = :id_fuel_type
-            GROUP BY id_fuel_type
+            GROUP BY id_fuel_type, id_pump
         ) fp2
         ON fp1.id_fuel_type = fp2.id_fuel_type AND fp1.date = fp2.max_date
         INNER JOIN pump p ON fp1.id_pump = p.id

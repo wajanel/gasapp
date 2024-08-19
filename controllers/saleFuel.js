@@ -1,3 +1,5 @@
+const { sequelizeDB } = require('../database/config');
+
 const { response } = require('express');
 const { SaleFuel } = require('../database/entity/SaleFuel');
 
@@ -97,9 +99,42 @@ const deleteSaleFuel = async (req, res) => {
     }
 };
 
+const listadoCompletoSF = async(req, res = response) => {
+
+    const query = `select sf.id, sf.id_fuel_price, sf.time, sf.quantity, sf.id_measure, sf.id_user, b.name as branch, 
+                   p.name as pump, fp.price, fp2.side, mf.name as measure, p.id_branch, fp2.id_pump, fp2.id_fuel_type, sf.closing 
+ from sale_fuel sf
+ inner join fuel_price fp on fp.id = sf.id_fuel_price
+ inner join fuel_pump fp2 
+   on fp2.id_fuel_type = fp.id_fuel_type and fp2.id_pump = fp.id_pump 
+      inner join pump p on p.id = fp2.id_pump 
+      inner join branch b on b.id = p.id_branch
+      inner join measure_fuel mf on mf.id = sf.id_measure
+ ;`
+
+    try {
+        const listado = await sequelizeDB.query(query, {
+            type: sequelizeDB.QueryTypes.SELECT,
+            raw:true
+        })
+        
+        return res.json({
+            ok:true,
+            listado
+        })
+    } catch (error) {
+        console.error('Error executing query:', error);
+        return res.status(500).json({
+            ok: false,
+            msg: 'Hubo error al consultar datos de precios'
+        });
+    }
+}
+
 module.exports = {
     crearSaleFuel,
     listadoSaleFuel,
     updateSaleFuel,
-    deleteSaleFuel
+    deleteSaleFuel,
+    listadoCompletoSF
 };

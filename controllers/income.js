@@ -18,9 +18,11 @@ const crearIncome = async (req, res = response) => {
             id:response.id
         });
     } catch (error) {
+        console.log(error.message);
+        
         return res.status(500).json({
             ok: false,
-            msg: error.message
+            msg: 'Error al crear el ingreso'
         });
     }
 };
@@ -34,9 +36,10 @@ const listadoIncome = async (req, res) => {
             listado
         });
     } catch (error) {
+        console.log(error.message)
         return res.status(500).json({
             ok: false,
-            msg: error.message
+            msg: 'Error al listar los ingresos'
         });
     }
 };
@@ -64,9 +67,11 @@ const updateIncome = async (req, res = response) => {
             msg: 'Ingreso actualizado exitosamente.'
         });
     } catch (error) {
+        console.log(error.message);
+        
         return res.status(500).json({
             ok: false,
-            msg: error.message
+            msg: 'Error al actualizar el ingreso'
         });
     }
 };
@@ -89,9 +94,11 @@ const deleteIncome = async (req, res) => {
             msg: 'Ingreso eliminado exitosamente.'
         });
     } catch (error) {
+        console.log(error.message);
+        
         return res.status(500).json({
             ok: false,
-            msg: error.message
+            msg: 'Error al eliminar el ingreso'
         });
     }
 };

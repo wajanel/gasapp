@@ -10,13 +10,31 @@ const crearFuelPump = async (req, res = response) => {
         return res.status(403).json({ok:false, msg:'No tiene permisos para realizar la acción'});
 
     try {
+
+        const result = await FuelPump.findOne({
+            where: {
+              id_fuel_type,
+              id_pump
+            }
+          });
+
+        if ( result ) {
+            const resultUpdate = await FuelPump.update(
+                { side },
+                { where: { id_fuel_type, id_pump } }
+            );
+            return res.json({
+                ok:true,
+                fuelPump: resultUpdate
+            })
+        }
+
         const response = await FuelPump.create({ id_fuel_type, id_pump, side });
         console.log(response);
         return res.json({
             ok: true,
             msg: 'Bomba de combustible creada',
             fuelPump: response,
-            id:response.id
         });
     } catch (error) {
         return res.status(500).json({
