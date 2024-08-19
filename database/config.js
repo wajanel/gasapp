@@ -6,7 +6,7 @@ const sequelizeDB = new Sequelize(process.env.BDD, process.env.BDDUSUARIO, proce
     host:process.env.HOSTBDD,
     dialect: process.env.DIAL,
     pool: {
-      max: 10, // Número máximo de conexiones en el pool
+      max: 5, // Número máximo de conexiones en el pool
       min: 0,  // Número mínimo de conexiones en el pool
       acquire: 300000, // Tiempo máximo en ms que el pool intentará obtener una conexión antes de arrojar un error
       idle: 100000 // Tiempo máximo en ms que una conexión puede estar inactiva antes de ser liberada
