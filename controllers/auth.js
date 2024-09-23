@@ -56,7 +56,7 @@ const loginUsuario = async (req, res = response) =>{
     try {
             const {userName, password} = req.body
 
-            const usuario = await User.findOne({where:{user_name:userName}});
+            const usuario = await User.findOne({where:{user_name:userName, status_id:1}});
             console.log(usuario);
             if(!usuario) {
                 return res.status(400).json({
