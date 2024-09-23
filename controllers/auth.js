@@ -6,8 +6,9 @@ const User = require('../database/entity/User');
 const crearUsuario = async (req, res = response) =>{
 
         try {
-
-            const {user_name, password, name, cod_employee, status_id, role} = req.body;
+            const role = 'usuario';
+            const status_id = 2;
+            const {user_name, password, name, cod_employee} = req.body;
             let usuario = await User.findAll({
                 where:{
                     user_name

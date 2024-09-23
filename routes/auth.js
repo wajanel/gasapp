@@ -9,9 +9,7 @@ router.post('/new',
     [   
         check('name', 'El nombre es requerido').not().isEmpty(),
         check('user_name', 'El nombre de usuario es requerido').not().isEmpty(),
-        check('email', 'El email es obligatorio').isEmail(),
         check('status_id', 'El status inicial es obligatorio').not().isEmpty(),
-        check('role', 'El role es obligatorio').not().isEmpty(),
         check('password', 'El password debe ser mayor a 6 caracteres').isLength({min:6}),
         inputValidator
     ], crearUsuario);
