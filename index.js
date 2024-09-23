@@ -14,6 +14,8 @@ app.use(cors());
 //necesario para poder capturar el body
 app.use(express.json())
 
+const path = require('path');
+
 app.use('/api/branch', require('./routes/branch'));
 app.use('/api/pump', require('./routes/pump'));
 app.use('/api/provider', require('./routes/provider'));
@@ -31,6 +33,10 @@ app.use('/api/fuel-price', require('./routes/fuelPrice'))
 app.use('/api/sale-fuel', require('./routes/saleFuel'))
 app.use('/api/procedures', require('./routes/procedures'));
 app.use('/api/closing', require('./routes/closing'));
+
+app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'public', 'index.html'));
+});
 
 app.listen('4002', ()=>{
     console.log('Ejecución servicio en puerto 4002');
