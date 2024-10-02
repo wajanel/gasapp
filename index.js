@@ -2,12 +2,14 @@ const express = require('express');
 const cors = require('cors');
 require('dotenv').config();
 const {dbConnection} = require('./database/config');
+const { configMDB } = require('./database/configMDB');
 
 const app = express();
 
 app.use( express.static('public'))
 
 dbConnection();
+configMDB();
  
 app.use(cors());
 
@@ -33,6 +35,7 @@ app.use('/api/fuel-price', require('./routes/fuelPrice'))
 app.use('/api/sale-fuel', require('./routes/saleFuel'))
 app.use('/api/procedures', require('./routes/procedures'));
 app.use('/api/closing', require('./routes/closing'));
+app.use('/api/translations', require('./routes/translation'))
 
 app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, 'public', 'index.html'));

@@ -26,19 +26,31 @@ const doDailyClosing = async (req, res = response) => {
             }
         );
 
-        console.log(result);
+        console.log('resultado', result);
         
 
-        const result_code = result.result_code;
-        const result_desc = result.result_desc;
+        const result_code = result[0].result_code;
+        const result_desc = result[0].result_desc;
 
+        console.log(result_code, result_desc);
+
+        if( result_code != 0) {
+            res.json({
+                ok: false,
+                result_code,
+                msg: result_desc || 'Error al realizar el cierre diariooo'
+            });    
+        } else 
         res.json({
             ok: true,
             result_code,
             result_desc
         });
+
+        console.log('termino normal');
+        
     } catch (error) {
-        console.log(error);
+        console.log('error:',error);
         res.status(500).json({
             ok: false,
             msg: error.message || 'Error al realizar el cierre diario',
