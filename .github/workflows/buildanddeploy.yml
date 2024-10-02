@@ -25,6 +25,7 @@ jobs:
           source ~/.nvm/nvm.sh
           cd /home/ubuntu/gasapp && \
           git pull origin main && \
+          npm install && \
           echo 'SECRET_JWT_SEED=${{ secrets.SECRET_JWT_SEED }}' > .env && \
           echo 'DIAL=${{ secrets.DIAL }}' >> .env && \
           echo 'DB_CNN=${{ secrets.DB_CNN }}' >> .env && \
