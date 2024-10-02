@@ -50,10 +50,6 @@ const DailyClosing = sequelizeDB.define(
             type:DataTypes.DECIMAL(10,4),
             allowNull:false
         },
-        date_process:{
-            type:DataTypes.DATE,
-            allowNull:false
-        },
     },
     {
         tableName:'daily_closing'

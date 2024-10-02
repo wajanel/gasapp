@@ -1,7 +1,5 @@
 const {response} = require('express')
 const  {Pump} = require('../database/entity/Pump');
-const { where } = require('sequelize');
-
 
 const crearPump = async(req, res = response) => {
     try {

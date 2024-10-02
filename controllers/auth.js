@@ -111,6 +111,8 @@ const revalidarToken = async (req, res = response) =>{
         })
 
     } catch (error) {
+        console.log(error);
+        
         res.status(400).json({
             ok:false,
             msg:'No se pudo regenerar token'
@@ -157,6 +159,7 @@ const listarUsers = async (req, res = response) => {
             }
         )
     } catch (error) {
+        console.log(error);
         res.status(500).json({
             ok:false,
             msg:'Error al listar usuarios'

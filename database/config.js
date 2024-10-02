@@ -1,3 +1,4 @@
+/* eslint-env node */
 const { Sequelize} = require('sequelize');
 
 

@@ -12,9 +12,6 @@ const doDailyClosing = async (req, res = response) => {
 
         const { date } = req.body;
 
-        const p_result_code = { type: sequelizeDB.INTEGER, dir: sequelizeDB.OUT };
-        const p_result_desc = { type: sequelizeDB.STRING, dir: sequelizeDB.OUT };
-
         const result = await sequelizeDB.query(
             'CALL sp_closing_day(:date, :userId, @p_result_code, @p_result_desc)',
             {
