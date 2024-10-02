@@ -20,10 +20,10 @@ jobs:
 
     - name: Deploy to EC2
       run: |
-        ssh -o StrictHostKeyChecking=no ubuntu@ec2-3-2-2-84.compute-1.amazonaws.com "
+        ssh -o StrictHostKeyChecking=no ubuntu@ec2-100-26-202-84.compute-1.amazonaws.com "
           export NVM_DIR=~/.nvm
           source ~/.nvm/nvm.sh
-          cd /home/ubuntu/copygasbackend && \
+          cd /home/ubuntu/gasapp && \
           git pull origin main && \
           echo 'SECRET_JWT_SEED=${{ secrets.SECRET_JWT_SEED }}' > .env && \
           echo 'DIAL=${{ secrets.DIAL }}' >> .env && \
