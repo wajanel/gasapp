@@ -1,0 +1,36 @@
+name: Deploy Backend
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up SSH
+      uses: webfactory/ssh-agent@v0.5.3
+      with:
+        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+    - name: Deploy to EC2
+      run: |
+        ssh -o StrictHostKeyChecking=no ubuntu@ec2-3-2-2-84.compute-1.amazonaws.com "
+          export NVM_DIR=~/.nvm
+          source ~/.nvm/nvm.sh
+          cd /home/ubuntu/copygasbackend && \
+          git pull origin main && \
+          echo 'SECRET_JWT_SEED=${{ secrets.SECRET_JWT_SEED }}' > .env && \
+          echo 'DIAL=${{ secrets.DIAL }}' >> .env && \
+          echo 'DB_CNN=${{ secrets.DB_CNN }}' >> .env && \
+          echo 'BDD=${{ secrets.BDD }}' >> .env && \
+          echo 'BDDUSUARIO=${{ secrets.BDDUSUARIO }}' >> .env && \
+          echo 'PASSWORDBDD=${{ secrets.PASSWORDBDD }}' >> .env && \
+          echo 'HOSTBDD=${{ secrets.HOSTBDD }}' >> .env && \
+          pm2 restart gasapp
+        "
